@@ -1,0 +1,30 @@
+TreeNode<int>* getTreeFromPostorderAndInorder(vector<int>& postOrder, vector<int>& inOrder){
+	// Write your code here.
+      int n=inOrder.size();
+
+     if(n==0) return NULL;
+
+     TreeNode<int>* root= new TreeNode<int>(postOrder[n-1]);
+
+     int pos;
+
+     for(int i=0;i<n;i++){
+
+          if(inOrder[i]==postOrder[n-1]) pos=i;
+
+     }
+
+     vector<int> l1(inOrder.begin(),inOrder.begin()+pos);
+
+     vector<int> r1(inOrder.begin()+pos+1,inOrder.end());
+
+     vector<int> l2(postOrder.begin(),postOrder.begin()+pos);
+
+     vector<int> r2(postOrder.begin()+pos,postOrder.begin()+n-1);
+
+     root->left=getTreeFromPostorderAndInorder(l2,l1);
+
+     root->right=getTreeFromPostorderAndInorder(r2,r1);
+
+     return root;
+}
